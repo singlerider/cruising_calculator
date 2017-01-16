@@ -69,4 +69,4 @@ class Survey {
 
 }
 
-module.exports.Survey = Survey;
+module.exports = Survey;
