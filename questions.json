@@ -1,0 +1,44 @@
+{
+  "title": "Questions",
+  "questions": [
+    {
+      "name": "boatName",
+      "question": "What is your boat's name?",
+      "type": "string"
+    }, {
+      "name": "boatLoa",
+      "question": "What is your boat's Length Overall?",
+      "type": "number"
+    }, {
+      "name": "boatHullMaterial",
+      "question": "What is your boat's hull material?",
+      "type": "string",
+      "choices": {
+        "fiberglass": 0,
+        "aluminum": 1,
+        "steel": 2
+      }
+    }, {
+      "name": "boatFuelType",
+      "question": "Is your boat gasoline, diesel, or neither?",
+      "type": "string",
+      "choices": {
+        "diesel": 0,
+        "gasoline": 1,
+        "neither": null
+      },
+      "followUp": [
+        {
+          "name": "boatHorsepower",
+          "question": "What is the total combined horsepower",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "name": "cruiseDuration",
+      "question": "How long (in days) will you be cruising for?",
+      "type": "number"
+    }
+  ]
+}

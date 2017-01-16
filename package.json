@@ -1,0 +1,22 @@
+{
+  "name": "cruising_calculator",
+  "version": "1.0.0",
+  "description": "calculate the cost of cruising your yacht over time",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/singlerider/cruising_calculator.git"
+  },
+  "author": "singlerider",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/singlerider/cruising_calculator/issues"
+  },
+  "homepage": "https://github.com/singlerider/cruising_calculator#readme",
+  "devDependencies": {
+    "blessed": "^0.1.81"
+  }
+}
