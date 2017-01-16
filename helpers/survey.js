@@ -1,6 +1,9 @@
 class Survey {
-  constructor(fileName) {
-    this.boat = new Map().set('data', new Map()); // Map { 'data' => Map {} }
+  constructor(fileName, successfulResponse) {
+    this.successfulResponse = successfulResponse;
+    this.boat = {
+      data: new Map()
+    }; // { 'data' => Map {} }
     this.questions = this.getQuestions(fileName);
     this.currentQuestion = 0;
     this.currentFollowUpQuestion = 0;
@@ -26,38 +29,31 @@ class Survey {
     }
   }
 
-  askQuestion(questionNumber, isFollowUp) {
-    // TODO: render the question with submit option; block thread until submission.
-    // TODO: coerce answer to number, if possible
-    let response = ANSWER;
-    this.submitQuestion(questionNumber, isFollowUp, response);
-  }
-
   submitQuestion(questionNumber, isFollowUp, response) {
     if (isFollowUp) {
       if (this.questions[this.currentQuestion].followUp[questionNumber]) { // sanity check
         if (this.questions[this.currentQuestion].followUp[questionNumber].type === typeof response) {
           this.boat.data.set(this.questions[this.currentQuestion].followUp[questionNumber].name, response);
-          this.incrementQuestion(questionNumber, isFollowUp);
+          this.successfulResponse(true, questionNumber, isFollowUp);
         } else {
-          console.log(`follow up #${questionNumber} was not answered with the right type of response. Requires ${this.questions[questionNumber].type}`);
-          this.askQuestion(questionNumber, isFollowUp);
+          // console.log(`follow up #${questionNumber} was not answered with the right type of response. Requires ${this.questions[questionNumber].type}`);
+          this.successfulResponse(false, questionNumber, isFollowUp);
         }
       } else {
-        console.log(`#${questionNumber} was not a valid follow up question`);
+        // console.log(`#${questionNumber} was not a valid follow up question`);
         process.exit(1);
       }
     } else {
       if (this.questions[questionNumber]) { // sanity check
         if (this.questions[questionNumber].type === typeof response) {
           this.boat.data.set(this.questions[questionNumber].name, response);
-          this.incrementQuestion(questionNumber, isFollowUp);
+          this.successfulResponse(true, questionNumber, isFollowUp);
         } else {
-          console.log(`#${questionNumber} was not answered with the right type of response`);
-          this.askQuestion(questionNumber, isFollowUp);
+          // console.log(`#${questionNumber} was not answered with the right type of response`);
+          this.successfulResponse(false, questionNumber, isFollowUp);
         }
       } else {
-        console.log(`#${questionNumber} was not a valid question`);
+        // console.log(`#${questionNumber} was not a valid question`);
         process.exit(1);
       }
     }

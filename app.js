@@ -7,5 +7,27 @@ const fs = require('fs'),
   Survey = require('./helpers/survey.js'),
   Form = require('./helpers/form.js');
 
-let survey = new Survey(questionFile);
-let form = new Form();
+let survey = new Survey(questionFile, surveyResponseSubmitted);
+let form = new Form(formEventSubmitted);
+
+function formEventSubmitted(response) {
+  if (!isNaN(response)) {  // if the response can be coerced, do it
+    response = parseFloat(response);
+  }
+  survey.submitQuestion(survey.currentQuestion, undefined, response);
+}
+
+function surveyResponseSubmitted(responseWasSuccessful, questionNumber, isFollowUp) {
+  if (responseWasSuccessful) {
+    survey.incrementQuestion(questionNumber, isFollowUp);
+    form.questionBox.setContent(survey.questions[survey.currentQuestion].question);
+    form.titleBox.setContent('Cruising Calculator');
+  } else {
+    form.titleBox.setContent('Improper type of answer');
+  }
+  form.render();
+
+}
+
+form.questionBox.setContent(survey.questions[survey.currentQuestion].question);
+form.render();

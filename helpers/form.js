@@ -2,7 +2,8 @@ let blessed = require('blessed');
 
 
 class Form {
-  constructor() {
+  constructor(eventSubmitted) {
+    this.eventSubmitted = eventSubmitted;
     this.surveyScreen = blessed.screen({
       autoPadding: true,
       smartCSR: true,
@@ -91,6 +92,7 @@ class Form {
       this.form.setContent('Submitted.');
       this.output.setContent(data.response);
       this.render();
+      this.eventSubmitted(data.response);
     });
     this.form.on('reset', (data) => {
       // console.log(data);
